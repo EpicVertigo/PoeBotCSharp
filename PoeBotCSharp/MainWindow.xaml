@@ -1,0 +1,76 @@
+﻿<Window x:Name="LeMainWindow" x:Class="PoeBotCSharp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d"
+        Title="PoE ChatReader" Height="300" Width="457" ResizeMode="CanMinimize" Icon="poebot.ico" Background="#FFE0E0E0" Foreground="Red">
+    <Window.Resources>
+        <ContextMenu x:Key="TrayMenu">
+            <MenuItem Header="Show chat window" Click="TrayMenu_ShowChat" />
+            <MenuItem Header="Copy last whisper" Click="TrayMenu_CopyLast"/>
+            <MenuItem Header="Exit"  Click="TrayMenu_Exit" />
+        </ContextMenu>
+    </Window.Resources>
+    <Grid Margin="0,0,2,-3">
+        <tb:TaskbarIcon
+            x:Name="tbi"
+            IconSource ="poebot.ico"
+            ToolTipText="PoEBot" Visibility="Hidden" 
+            ContextMenu="{StaticResource TrayMenu}"
+            MenuActivation="LeftOrRightClick"
+            >
+        </tb:TaskbarIcon>
+        <Button x:Name="BtnStart" Content="Start" HorizontalAlignment="Left" Margin="355,230,0,0" VerticalAlignment="Top" Width="75" Click="btnStartAction"/>
+        <TabControl HorizontalAlignment="Left" Height="215" Margin="10,10,0,0" VerticalAlignment="Top" Width="420">
+            <TabItem Header="Chat log">
+                <ScrollViewer x:Name="MainScroll">
+                    <RichTextBox x:Name="ChatBlock" AcceptsReturn="False" IsReadOnly="True" IsUndoEnabled="False" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0" AutoWordSelection="False" IsDocumentEnabled="True">
+                        <RichTextBox.Resources>
+                            <Style TargetType="{x:Type Paragraph}">
+                                <Setter Property="Margin" Value="0"/>
+                            </Style>
+                        </RichTextBox.Resources>
+                    </RichTextBox>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-1,0">
+                    <TextBox x:Name="pathTextBox" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="10,41,0,0" TextWrapping="NoWrap" AcceptsReturn="True" VerticalAlignment="Top" Width="297" AutomationProperties.HelpText="Default path is Steam\apps\common\Path of Exile\logs" IsReadOnlyCaretVisible="True"/>
+                    <Label Content="Path to client.txt" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="104"/>
+                    <Label Content="Words to search:" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="149"/>
+                    <TextBox x:Name="keywordsTextBox" HorizontalAlignment="Left" Height="23" Margin="10,99,0,0" TextWrapping="NoWrap" AcceptsReturn="False" VerticalAlignment="Top" Width="297" KeyDown="keywordsTextBox_KeyDown"/>
+                    <Button Content="Reload" HorizontalAlignment="Left" Margin="312,99,0,0" VerticalAlignment="Top" Width="84" Height="23" Click="btnReloadKeywords" RenderTransformOrigin="0.524,0.522"/>
+                    <Button Content="Open file" HorizontalAlignment="Left" Margin="312,41,0,0" VerticalAlignment="Top" Width="84" Height="22" Click="btnOpenFile"/>
+                    <CheckBox x:Name="minimizeCheckbox" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Width="168" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                    <Button x:Name="helpPath" Content="?" HorizontalAlignment="Left" Margin="398,41,0,0" VerticalAlignment="Top" Width="14" Click="helpPathClick" Background="#FFDDDDDD" Foreground="#FF002EFF" MouseLeave="helpPath_MouseLeave" Height="22">
+                        <Button.ToolTip>
+                            <ToolTip x:Name="pathToolTip">
+                                <TextBlock>
+                                Default path is Path of Exile/logs/Client.txt
+                                <LineBreak/>
+                                For Steam version path is Steam/steamapps/common/Path of Exile/logs/Client.txt
+                                </TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button x:Name="helpKeywords" Content="?" HorizontalAlignment="Left" Margin="398,99,0,0" VerticalAlignment="Top" Width="14" Click="helpKeywordsClick" Background="#FFDDDDDD" Foreground="#FF002EFF" MouseLeave="helpKeywords_MouseLeave" Height="23">
+                        <Button.ToolTip>
+                            <ToolTip x:Name="keywordsToolTip">
+                                <TextBlock>
+                                    Comma separated words and phrases
+                                </TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="BtnStop" Content="Stop" HorizontalAlignment="Left" Margin="276,230,0,0" VerticalAlignment="Top" Width="74" Height="20" Click="btnStopAction" IsEnabled="False"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="41" Click="btnClearLog"/>
+        <Label Content="Messages count: " HorizontalAlignment="Left" Margin="319,8,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBlock x:Name="MessagesCountLabel" Text ="0" HorizontalAlignment="Left" Margin="415,13,0,0" VerticalAlignment="Top" Foreground="Black"/>
+        <Button Content="Copy last whisper" HorizontalAlignment="Left" Margin="56,230,0,0" VerticalAlignment="Top" Width="103" Click="CopyNickname_Click"/>
+    </Grid>
+</Window>
