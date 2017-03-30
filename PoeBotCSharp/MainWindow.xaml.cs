@@ -17,6 +17,7 @@ namespace PoeBotCSharp
     public partial class MainWindow : Window
     {
         private const String APP_ID = "Path of Exile Chat Monitor";
+        private static string APP_VERSION = "1.0.0";
         public static string LAST_NICKNAME = "";
         public static string LAST_MESSAGE = "";
         System.Text.RegularExpressions.Regex UNHUMAN_REGEX = new System.Text.RegularExpressions.Regex(@"@From\s(?:(?<sas>[^<]\w*)|<.*>\s(?<sas>\w*)):\s(?<text>.*)");
@@ -151,6 +152,13 @@ namespace PoeBotCSharp
             }
             catch (FileNotFoundException)
             {
+                taskBool = false;
+                Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+                {
+                    BtnStart.IsEnabled = true;
+                    BtnStop.IsEnabled = false;
+                }
+                ));
                 MessageBox.Show("Please choose proper client.txt file", "File not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -361,6 +369,13 @@ namespace PoeBotCSharp
             {
                 Clipboard.SetText("@"+LAST_NICKNAME);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.Owner = Window.GetWindow(this);
+            about.ShowDialog();
         }
     }
 }
