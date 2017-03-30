@@ -246,8 +246,12 @@ namespace PoeBotCSharp
                 settings.path = openFileDialog.FileName;
                 SaveSettings(settings);
 
-                if (mainLoop != null)
+                if ((mainLoop != null) && (mainLoop.IsCompleted == false ||
+                           mainLoop.Status == TaskStatus.Running ||
+                           mainLoop.Status == TaskStatus.WaitingToRun ||
+                           mainLoop.Status == TaskStatus.WaitingForActivation))
                 {
+                    var statusloop = mainLoop.Status;
                     RestartMainTask();
                 }
             }
