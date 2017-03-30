@@ -6,7 +6,7 @@ Works only on Windows 8, 8.1 and 10
 ![Notification Example](https://i.imgur.com/dYO9i8B.png)
 
 # Installing
-Grab latest release here
+Grab latest release [here](https://github.com/EpicVertigo/PoeBotCSharp/releases)
 
 # Quick start
 * Choose Client.txt file in Path of Exile/logs/
